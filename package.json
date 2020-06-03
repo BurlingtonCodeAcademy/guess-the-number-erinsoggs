@@ -10,11 +10,18 @@
     "type": "git",
     "url": "git+https://github.com/BurlingtonCodeAcademy/guess-the-number.git"
   },
-  "keywords": ["nodejs", "games", "learn-to-program"],
+  "keywords": [
+    "nodejs",
+    "games",
+    "learn-to-program"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/BurlingtonCodeAcademy/guess-the-number/issues"
   },
-  "homepage": "https://github.com/BurlingtonCodeAcademy/guess-the-number#readme"
+  "homepage": "https://github.com/BurlingtonCodeAcademy/guess-the-number#readme",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  }
 }
