@@ -7,6 +7,10 @@ function ask(questionText) {
   });
 }
 
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+};
+
 start();
 
 async function start() {
@@ -16,3 +20,5 @@ async function start() {
   // Now try and complete the program.
   process.exit();
 }
+
+
