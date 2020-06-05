@@ -46,7 +46,7 @@ async function start() {
     process.exit();
   } else if (isGuessCorrect === "yes") {
     console.log(
-      `I win! I guessed your number in ${guess} tries. See you next time.`
+      `I win, because winners always guess your number in ${guess} tries! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
     );
     process.exit();
   }
@@ -56,6 +56,10 @@ async function start() {
     let highLow = await ask(
       "Is your number higher or lower? Type h (higher) or l (lower): "
     );
+    if (highLow.toLowerCase() !== "h" && highLow.toLowerCase() !== "l") {
+      console.log("You're not speaking my language! Please restart the game!");
+      process.exit();
+    }
     while (highLow.toLowerCase() !== "c")
       if (highLow.toLowerCase() === "h") {
         if (minNumber + 1 <= maxNumber) {
@@ -67,9 +71,19 @@ async function start() {
         highLow = await ask(
           "Is your number higher, lower, or did I guess correctly? Type h (higher), l (lower), or c (correct): "
         );
+        if (
+          highLow.toLowerCase() !== "h" &&
+          highLow.toLowerCase() !== "l" &&
+          highLow.toLowerCase() !== "c"
+        ) {
+          console.log(
+            "You're not speaking my language! Please restart the game!"
+          );
+          process.exit();
+        }
         if (highLow.toLowerCase() === "c") {
           console.log(
-            `I win! I guessed your number in ${guess} tries. See you next time.`
+            `I win, because winners always guess your number in ${guess} tries! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
           );
           process.exit();
         }
@@ -81,9 +95,19 @@ async function start() {
         highLow = await ask(
           "Is your number higher, lower, or did I guess correctly? Type h (higher), l (lower), or c (correct): "
         );
+        if (
+          highLow.toLowerCase() !== "h" &&
+          highLow.toLowerCase() !== "l" &&
+          highLow.toLowerCase() !== "c"
+        ) {
+          console.log(
+            "You're not speaking my language! Please restart the game!"
+          );
+          process.exit();
+        }
         if (highLow.toLowerCase() === "c") {
           console.log(
-            `I win! I guessed your number in ${guess} tries. See you next time.`
+            `I win, because winners always guess your number in ${guess} tries! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
           );
           process.exit();
         }
