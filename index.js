@@ -21,7 +21,7 @@ start();
 
 async function start() {
   console.log(
-    `Let's play a game! Pick a number between ${minNumber} and ${maxNumber} I'll try to guess it!`
+    `Let's play a game! Pick a number between ${minNumber} and ${maxNumber} and I'll try to guess it!`
   );
   let secretNumber = await ask(
     "Go ahead and pick a number by typing it into the console.\n(I promise I won't look!): "
