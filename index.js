@@ -13,7 +13,7 @@ function ask(questionText) {
 }
 
 function randomNumber(min, max) {
-  // return Math.floor(Math.random() * (max - min + 1) + min);
+  // return Math.floor(Math.random() * (max - min + 1) + min)
   return Math.floor((min + max) / 2);
 }
 
@@ -28,7 +28,9 @@ async function start() {
   );
   secretNumber = parseInt(secretNumber);
   if (isNaN(secretNumber)) {
-    console.log("You're not speaking my language! Please restart the game!");
+    console.log(
+      "You either entered an invalid answer or are cheating (booooo!) Please restart the game!"
+    );
     process.exit();
   } else {
     console.log("Your number is: " + secretNumber + ".");
@@ -39,7 +41,7 @@ async function start() {
   }
   if (secretNumber === computerGuess) {
     console.log(
-      `I win, because winners always guess your number in ${guess} tries! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
+      `I win, because winners always guess your number in ${guess} try! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
     );
     process.exit();
   }
@@ -49,23 +51,29 @@ async function start() {
     let highLow = await ask(
       "Is your number higher or lower? Type h (higher) or l (lower): "
     );
-    if (highLow.toLowerCase() !== "h" && highLow.toLowerCase() !== "l") {
-      console.log("You're not speaking my language! Please restart the game!");
+    if (
+      (highLow.toLowerCase() !== "h" && highLow.toLowerCase() !== "l") ||
+      (highLow.toLowerCase() === "l" && secretNumber > computerGuess) ||
+      (highLow.toLowerCase() === "h" && secretNumber < computerGuess)
+    ) {
+      console.log(
+        "You either entered an invalid answer or are cheating (booooo!) Please restart the game!"
+      );
       process.exit();
-    } else if (highLow.toLowerCase() === "h") {
+    } else if (highLow.toLowerCase() === "h" && secretNumber > computerGuess) {
       if (minNumber + 1 <= maxNumber) {
         minNumber = computerGuess + 1;
       }
       computerGuess = randomNumber(minNumber, maxNumber);
       guess += 1;
       console.log(`My next guess is: ${computerGuess}`);
-    } else if (highLow.toLowerCase() === "l") {
+    } else if (highLow.toLowerCase() === "l" && secretNumber < computerGuess) {
       maxNumber = computerGuess - 1;
       computerGuess = randomNumber(minNumber, maxNumber);
       guess += 1;
       console.log(`My next guess is: ${computerGuess}`);
     }
-    if (secretNumber === computerGuess) {
+    if (secretNumber === computerGuess && guess !== 1) {
       console.log(
         `I win, because winners always guess your number in ${guess} tries! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
       );
