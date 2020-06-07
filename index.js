@@ -2,8 +2,8 @@ const readline = require("readline");
 const rl = readline.createInterface(process.stdin, process.stdout);
 
 let minNumber = 1;
-let maxNumber = 100;
-let computerGuess = randomNumber(minNumber, maxNumber);
+let maxNumber;
+let computerGuess;
 let guess = 0;
 
 function ask(questionText) {
@@ -21,10 +21,14 @@ start();
 
 async function start() {
   console.log(
-    `Let's play a game! Pick a number between ${minNumber} and ${maxNumber} and I'll try to guess it!`
+    "Let's play a game! You pick a number and I'll guess what it is! First, let's establish the range of numbers you can choose from."
   );
+  maxNumber = await ask(
+    `The range will start at ${minNumber}. You choose where it ends. Pick the ending range number: `
+  );
+  maxNumber = parseInt(maxNumber);
   let secretNumber = await ask(
-    "Go ahead and pick a number by typing it into the console.\n(I promise I won't look!): "
+    `${maxNumber}, nice choice! Now, go ahead and pick you number between ${minNumber} and ${maxNumber} by typing it into the console.\n(I promise I won't look!): `
   );
   secretNumber = parseInt(secretNumber);
   if (isNaN(secretNumber)) {
