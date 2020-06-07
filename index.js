@@ -108,7 +108,7 @@ async function start() {
       maxNumber = computerGuess - 1;
       // The computer guesses again.
       computerGuess = randomNumber(minNumber, maxNumber);
-      // guess continues to increment on line 110.
+      // guess continues to increment.
       guess += 1;
       console.log(`My next guess is: ${computerGuess}`);
     }
