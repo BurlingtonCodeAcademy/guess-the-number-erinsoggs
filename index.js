@@ -2,11 +2,23 @@
 const readline = require("readline");
 const rl = readline.createInterface(process.stdin, process.stdout);
 
-// initializing minNumber, computerGuess, and guess. Declaring maxNumber for later use.
+chooseGame();
+async function chooseGame() {
+  let gameChoice = await ask(
+    "Hello there! I've got two super fun games for you to choose from! Enter 1 if you'd like me to guess your number, or 2 if you'd like to guess my number. "
+  );
+  if (parseInt(gameChoice) === 1) {
+    start();
+  } else if (parseInt(gameChoice) === 2) {
+    reverseStart();
+  }
+}
+
+// Initializing minNumber, computerGuess, and guess. Declaring maxNumber for later use.
 // minNumber is the minimum number for the range that the user will choose a number from. This will be reassigned later.
 let minNumber = 1;
 // maxNumber will be established by the user and is the highest number in the range.
-let maxNumber;
+let maxNumber = 100;
 // computerGuess is the computer's guess at the user's secret number
 let computerGuess;
 // guess increments throughout the program to determine how many tries it takes the computer to guess the user's number.
@@ -20,23 +32,21 @@ function ask(questionText) {
 }
 
 // Function that allows the computer to generate a random number faster based on dividing the min and max by two
-function randomNumber(min, max) {
+function smartGuess(min, max) {
   return Math.floor((min + max) / 2);
 }
 
 // Calling async function
-start();
-
 async function start() {
   console.log(
-    "Let's play a game! You pick a number and I'll guess what it is! First, let's establish the range of numbers you can choose from."
+    "Great game choice! You pick a number and I'll guess what it is! First, let's establish the range of numbers you can choose from."
   );
   // Initializing maxNumber. maxNumber will be determined by the user input.
   maxNumber = await ask(
     `The range will start at ${minNumber}. You choose where it ends. Pick the ending range number: `
   );
   // Prevents the user from entering anything other than a number by forcing them to restart the game
-  if (isNaN(maxNumber)) {
+  if (isNaN(maxNumber) || maxNumber === "") {
     console.log("You didn't enter a number! Please restart the game!");
     process.exit();
   }
@@ -63,7 +73,7 @@ async function start() {
   } else {
     console.log("Your number is: " + secretNumber + ".");
     // The computer is going to try and guess the human's number using the randomNumber function.
-    computerGuess = randomNumber(minNumber, maxNumber);
+    computerGuess = smartGuess(minNumber, maxNumber);
     // guess is incrementing to determine how many guesses it takes the computer to figure out the user's secret number.
     guess += 1;
     console.log(`I'm going to guess that your number is: ${computerGuess}`);
@@ -98,7 +108,7 @@ async function start() {
         minNumber = computerGuess + 1;
       }
       // The computer guesses again.
-      computerGuess = randomNumber(minNumber, maxNumber);
+      computerGuess = smartGuess(minNumber, maxNumber);
       // guess continues to increment.
       guess += 1;
       console.log(`My next guess is: ${computerGuess}`);
@@ -107,7 +117,7 @@ async function start() {
       // The new maxNumber equals the computerGuess - 1.
       maxNumber = computerGuess - 1;
       // The computer guesses again.
-      computerGuess = randomNumber(minNumber, maxNumber);
+      computerGuess = smartGuess(minNumber, maxNumber);
       // guess continues to increment.
       guess += 1;
       console.log(`My next guess is: ${computerGuess}`);
@@ -119,5 +129,46 @@ async function start() {
       );
       process.exit();
     }
+  }
+}
+
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * max + min);
+}
+
+async function reverseStart() {
+  console.log(
+    `Excellent game choice! I'm going to pick a number and you're going to guess it! The number I'm going to pick is between ${minNumber} and ${maxNumber}.`
+  );
+  let computerNumber = randomNumber(minNumber, maxNumber);
+  computerNumber = parseInt(computerNumber);
+  let humanGuess = await ask(
+    "Ok, I've picked my number. What's your first guess? "
+  );
+  humanGuess = parseInt(humanGuess);
+  if (isNaN(humanGuess)) {
+    console.log(
+      "You either entered an invalid number or are cheating! You must restart the game!"
+    );
+    process.exit();
+  } else if (humanGuess === computerNumber) {
+    console.log(
+      "You guessed my number! Go eat some ice cream and celebrate! See ya next time."
+    );
+    process.exit();
+  }
+  while (humanGuess !== computerNumber) {
+    console.log("You've guessed incorrectly!");
+    if (humanGuess < computerNumber) {
+      humanGuess = await ask("My number is higher! Guess again! ");
+      humanGuess = parseInt(humanGuess);
+    } else if (humanGuess > computerNumber) {
+      humanGuess = await ask("My number is lower! Guess again! ");
+      humanGuess = parseInt(humanGuess);
+    }
+  }
+  if (humanGuess === computerNumber) {
+    console.log("You win! Game over.");
+    process.exit();
   }
 }
