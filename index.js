@@ -9,7 +9,7 @@ let minNumber = 1;
 let maxNumber;
 // computerGuess is the computer's guess at the user's secret number
 let computerGuess;
-// guess incremements throughout the program to determine how many tries it takes the computer to guess the user's number.
+// guess increments throughout the program to determine how many tries it takes the computer to guess the user's number.
 let guess = 0;
 
 // Function that handles receiving user input
@@ -35,26 +35,26 @@ async function start() {
   maxNumber = await ask(
     `The range will start at ${minNumber}. You choose where it ends. Pick the ending range number: `
   );
-  // Lines 39-42 prevent the user from entering anything other than a number by forcing them to restart the game.
+  // Prevents the user from entering anything other than a number by forcing them to restart the game
   if (isNaN(maxNumber)) {
     console.log("You didn't enter a number! Please restart the game!");
     process.exit();
   }
-  // Lines 43 makes sure the user input is converted from a string to an integer.
+  // Makes sure the user input is converted from a string to an integer
   maxNumber = parseInt(maxNumber);
-  // Lines 46-48 asks the user to choose a number between the established range.
+  // Asks the user to choose a number between the established range
   let secretNumber = await ask(
     `${maxNumber}, nice choice! Now, go ahead and pick your number between ${minNumber} and ${maxNumber} by typing it into the console.\n(I promise I won't look!): `
   );
-  // Line 50 makes sure the secret number is converted from a string to a number.
+  // Makes sure the secret number is converted from a string to a number
   secretNumber = parseInt(secretNumber);
-  // Lines 52-56 prevent the user from entering anything other than a number.
+  // Prevents the user from entering anything other than a number by forcing them to restart the game
   if (isNaN(secretNumber)) {
     console.log(
       "You either entered an invalid answer or are cheating (booooo!) Please restart the game!"
     );
     process.exit();
-    // Lines 58-61 prevent the user from making secretNumber a number that's out of range. If they do, they have to restart the game.
+    // Prevents the user from making secretNumber a number that's out of range by forcing them to restart the game
   } else if (secretNumber < minNumber || secretNumber > maxNumber) {
     console.log(
       "Your number is out of range! So sorry to inconvenience you, but you'll have to restart the game!"
@@ -62,13 +62,13 @@ async function start() {
     process.exit();
   } else {
     console.log("Your number is: " + secretNumber + ".");
-    // On line 65, the computer is going to try and guess the human's number using the randomNumber function.
+    // The computer is going to try and guess the human's number using the randomNumber function.
     computerGuess = randomNumber(minNumber, maxNumber);
-    // On line 67, guess is incrementing to determine how many guesses it takes the computer to figure out the user's secret number.
+    // guess is incrementing to determine how many guesses it takes the computer to figure out the user's secret number.
     guess += 1;
     console.log(`I'm going to guess that your number is: ${computerGuess}`);
   }
-  // On lines 71-76, the game automatically ends if the secret number equals the computer's guess on the first try. This prevents cheating.
+  // The game automatically ends if the secret number equals the computer's guess on the first try. This prevents cheating.
   if (secretNumber === computerGuess) {
     console.log(
       `I win, because winners always guess your number in ${guess} try! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
@@ -76,12 +76,12 @@ async function start() {
     process.exit();
   }
 
-  // The loop is entered on line 79 if the secret number doesn't equal the computer guess.
+  // The loop is entered if the secret number doesn't equal the computer guess.
   while (secretNumber !== computerGuess) {
     let highLow = await ask(
       "Is your number higher or lower? Type h (higher) or l (lower): "
     );
-    // Lines 84-92 prevent the user from entering anything other than "h" or "l", and also prevents them from saying the number is higher if it's actually lower, and lower if it's actually higher. Doing any of this makes them restart the game.
+    // Prevents the user from entering anything other than "h" or "l", and also prevents them from saying the secret number is higher if it's actually lower, and lower if it's actually higher. Doing any of this makes them restart the game.
     if (
       (highLow.toLowerCase() !== "h" && highLow.toLowerCase() !== "l") ||
       (highLow.toLowerCase() === "l" && secretNumber > computerGuess) ||
@@ -91,28 +91,28 @@ async function start() {
         "You either entered an invalid answer or are cheating (booooo!) Please restart the game!"
       );
       process.exit();
-      // If the conditons for "h" are met (user enters "h" and the secret number is higher than the computer guess), we end up on line 94.
+      // If the conditions for "h" are met (user enters "h" and the secret number is higher than the computer guess), we end up here.
     } else if (highLow.toLowerCase() === "h" && secretNumber > computerGuess) {
-      // The minNumber will be reassigned to the computerGuess + 1 as long as the minNumber + 1 is less than or equal to the maxNumber (lines 96-98).
+      // The minNumber will be reassigned to the computerGuess + 1 as long as the minNumber + 1 is less than or equal to the maxNumber.
       if (minNumber + 1 <= maxNumber) {
         minNumber = computerGuess + 1;
       }
-      // The computer guesses again on line 100.
+      // The computer guesses again.
       computerGuess = randomNumber(minNumber, maxNumber);
-      // guess continues to increment on line 102.
+      // guess continues to increment.
       guess += 1;
       console.log(`My next guess is: ${computerGuess}`);
-      // If the conditons for "l" are met (user enters "l" and the secret number is less than the computer guess), we end up on line 105.
+      // If the conditions for "l" are met (user enters "l" and the secret number is less than the computer guess), we end up here.
     } else if (highLow.toLowerCase() === "l" && secretNumber < computerGuess) {
-      // The new maxNumber equals the computerGuess - 1 on line 107.
+      // The new maxNumber equals the computerGuess - 1.
       maxNumber = computerGuess - 1;
-      // The computer guesses again on line 108.
+      // The computer guesses again.
       computerGuess = randomNumber(minNumber, maxNumber);
       // guess continues to increment on line 110.
       guess += 1;
       console.log(`My next guess is: ${computerGuess}`);
     }
-    // On lines 115-120, the game automatically exits if the secret number equals the computer guess, and it's any guess after the first guess.
+    // The game automatically exits if the secret number equals the computer guess, and it's any guess after the first guess.
     if (secretNumber === computerGuess && guess !== 1) {
       console.log(
         `I win, because winners always guess your number in ${guess} tries! I'm going to go eat a celebratory pint (or three) of Cherry Garcia now. See you next time!`
