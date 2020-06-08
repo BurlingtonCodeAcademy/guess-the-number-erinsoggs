@@ -10,11 +10,30 @@
     "type": "git",
     "url": "git+https://github.com/BurlingtonCodeAcademy/guess-the-number.git"
   },
-  "keywords": ["nodejs", "games", "learn-to-program"],
+  "keywords": [
+    "nodejs",
+    "games",
+    "learn-to-program"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/BurlingtonCodeAcademy/guess-the-number/issues"
   },
-  "homepage": "https://github.com/BurlingtonCodeAcademy/guess-the-number#readme"
+  "homepage": "https://github.com/BurlingtonCodeAcademy/guess-the-number#readme",
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "husky": ">=4",
+    "jest": "^26.0.1",
+    "lint-staged": ">=10",
+    "prettier": "2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  }
 }
