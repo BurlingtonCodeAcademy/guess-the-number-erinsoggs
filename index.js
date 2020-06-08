@@ -135,6 +135,8 @@ async function start() {
   }
 }
 
+// This game only works (I think) if played exactly how it should be. Without going into detail, I ran into a lot of trouble with reassigning variables to put cheating blocks / entering invalid character blocks into place.
+
 function randomNumber(min, max) {
   return Math.floor(Math.random() * max + min);
 }
